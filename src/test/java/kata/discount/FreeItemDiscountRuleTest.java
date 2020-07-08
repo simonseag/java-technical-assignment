@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import kata.supermarket.Item;
@@ -18,6 +20,20 @@ import kata.supermarket.ItemType;
  *
  */
 class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
+
+	@BeforeAll
+	public static void init() {
+
+		DiscountCalculator.getInstance()
+				.deleteRules();
+	}
+
+	@AfterAll
+	public static void cleanup() {
+
+		DiscountCalculator.getInstance()
+				.deleteRules();
+	}
 
 	@Test
 	void testCalculateFreeItemsFromNullList() {
@@ -43,7 +59,7 @@ class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
 		assertEquals("There should be zero discount", BigDecimal.ZERO,
 				theRule.calculateDiscount(Collections.emptyList()));
 	}
-	
+
 	@Test
 	void testInvalidNullTypeRuleDefinition() {
 		try {
@@ -108,6 +124,9 @@ class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
 
 		long items = theRule.calculateFreeItems(getItems(14, aBeanTinItem));
 		assertEquals("Incorrect Number of free items returned", result, items);
+
+		DiscountCalculator.getInstance()
+				.deleteRules();
 	}
 
 	@Test
@@ -116,6 +135,9 @@ class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
 
 		BigDecimal discount = theRule.calculateDiscount(getItems(14, aBeanTinItem));
 		assertEquals("Calculated Discount was not correct", new BigDecimal("3.85"), discount);
+
+		DiscountCalculator.getInstance()
+				.deleteRules();
 	}
 
 	@Test
@@ -124,6 +146,9 @@ class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
 
 		BigDecimal discount = theRule.calculateDiscount(getItems(14, aBeanTinItem));
 		assertEquals("Calculated Discount was not correct", new BigDecimal("2.20"), discount);
+
+		DiscountCalculator.getInstance()
+				.deleteRules();
 	}
 
 	@Test
@@ -132,5 +157,8 @@ class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
 
 		BigDecimal discount = theRule.calculateDiscount(getItems(14, aBeanTinItem));
 		assertEquals("Calculated Discount was not correct", new BigDecimal("2.75"), discount);
+
+		DiscountCalculator.getInstance()
+				.deleteRules();
 	}
 }

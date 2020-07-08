@@ -1,6 +1,7 @@
 package kata.discount;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,7 +22,7 @@ public class DiscountCalculator {
 	 * @author simon.seagroatt
 	 *
 	 */
-	private static class DiscountFactoryHolder {
+	private static class DiscountCalculatorHolder {
 		private final static DiscountCalculator INSTANCE = new DiscountCalculator();
 	}
 
@@ -36,11 +37,15 @@ public class DiscountCalculator {
 	}
 
 	public static DiscountCalculator getInstance() {
-		return DiscountFactoryHolder.INSTANCE;
+		return DiscountCalculatorHolder.INSTANCE;
 	}
 
 	public void addRule(LoadableDiscountRule rule) {
 		allRules.put(rule.getKey(), rule);
+	}
+
+	public void deleteRules() {
+		allRules.clear();
 	}
 
 	public int getRuleCount() {
@@ -48,6 +53,12 @@ public class DiscountCalculator {
 	}
 
 	public BigDecimal getDiscountTotal(List<Item> items) {
-		return BigDecimal.ZERO;
+
+		return allRules.values()
+				.stream()
+				.map(p -> p.calculateDiscount(items))
+				.reduce(BigDecimal::add)
+				.orElse(BigDecimal.ZERO)
+				.setScale(2, RoundingMode.HALF_UP);
 	}
 }
