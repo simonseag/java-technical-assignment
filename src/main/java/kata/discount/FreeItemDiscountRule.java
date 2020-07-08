@@ -1,5 +1,6 @@
 package kata.discount;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import kata.supermarket.Item;
@@ -39,6 +40,21 @@ public class FreeItemDiscountRule extends QualifyingDiscountRule {
 		noOfFreeItems = freeItemCount;
 
 		isValid();
+	}
+
+	@Override
+	public BigDecimal calculateDiscount(List<Item> items) {
+
+		// calculate the number of items that should then be free of charge
+		long freeItems = calculateFreeItems(items);
+
+		if (freeItems > 0) {
+			return getQualifyingItems(items).get(0)
+					.price()
+					.multiply(BigDecimal.valueOf(freeItems));
+		}
+
+		return BigDecimal.ZERO;
 	}
 
 	@Override

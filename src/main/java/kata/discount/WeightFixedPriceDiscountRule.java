@@ -1,5 +1,6 @@
 package kata.discount;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import kata.supermarket.Item;
@@ -25,7 +26,12 @@ public class WeightFixedPriceDiscountRule extends QualifyingDiscountRule {
 	public WeightFixedPriceDiscountRule(ItemType qualifyType) {
 		super(qualifyType);
 	}
-	
+
+	@Override
+	public BigDecimal calculateDiscount(List<Item> items) {
+		return BigDecimal.ZERO;
+	}
+
 	@Override
 	public long calculateFreeItems(List<Item> items) {
 		return 0;

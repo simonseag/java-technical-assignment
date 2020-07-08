@@ -2,6 +2,7 @@ package kata.discount;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,11 @@ class FixedPriceDiscountRuleTest {
 		assertEquals("There should be zero free items", 0, theRule.calculateFreeItems(null));
 	}
 
+	@Test
+	void testCalculateDiscountFromNullList() {
+		FixedPriceDiscountRule theRule = new FixedPriceDiscountRule(ItemType.A);
+		assertEquals("There should be zero discount", BigDecimal.ZERO, theRule.calculateDiscount(null));
+	}
 
 	@Test
 	void testCalculateFreeItemsFromEmptyList() {
@@ -23,5 +29,11 @@ class FixedPriceDiscountRuleTest {
 		assertEquals("There should be zero free items", 0, theRule.calculateFreeItems(Collections.emptyList()));
 	}
 
+	@Test
+	void testCalculateDiscountFromEmptyList() {
+		FixedPriceDiscountRule theRule = new FixedPriceDiscountRule(ItemType.A);
+		assertEquals("There should be zero discount", BigDecimal.ZERO,
+				theRule.calculateDiscount(Collections.emptyList()));
+	}
 
 }

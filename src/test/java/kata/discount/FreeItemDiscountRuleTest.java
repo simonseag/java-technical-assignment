@@ -3,6 +3,7 @@ package kata.discount;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,11 +26,24 @@ class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
 	}
 
 	@Test
+	void testCalculateDiscountFromNullList() {
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.A, 3, 1);
+		assertEquals("There should be zero discount", BigDecimal.ZERO, theRule.calculateDiscount(null));
+	}
+
+	@Test
 	void testCalculateFreeItemsFromEmptyList() {
 		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.A, 3, 1);
 		assertEquals("There should be zero free items", 0, theRule.calculateFreeItems(Collections.emptyList()));
 	}
 
+	@Test
+	void testCalculateDiscountFromEmptyList() {
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.A, 3, 1);
+		assertEquals("There should be zero discount", BigDecimal.ZERO,
+				theRule.calculateDiscount(Collections.emptyList()));
+	}
+	
 	@Test
 	void testInvalidNullTypeRuleDefinition() {
 		try {
@@ -96,4 +110,27 @@ class FreeItemDiscountRuleTest extends ShoppingFactoryTest {
 		assertEquals("Incorrect Number of free items returned", result, items);
 	}
 
+	@Test
+	void testBuyOneGetOneFreeDiscount() {
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.E, 1, 1);
+
+		BigDecimal discount = theRule.calculateDiscount(getItems(14, aBeanTinItem));
+		assertEquals("Calculated Discount was not correct", new BigDecimal("3.85"), discount);
+	}
+
+	@Test
+	void testBuyTwoGetOneFreeDiscount() {
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.E, 2, 1);
+
+		BigDecimal discount = theRule.calculateDiscount(getItems(14, aBeanTinItem));
+		assertEquals("Calculated Discount was not correct", new BigDecimal("2.20"), discount);
+	}
+
+	@Test
+	void testBuyThreeGetTwoFreeDiscount() {
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.E, 3, 2);
+
+		BigDecimal discount = theRule.calculateDiscount(getItems(14, aBeanTinItem));
+		assertEquals("Calculated Discount was not correct", new BigDecimal("2.75"), discount);
+	}
 }
