@@ -2,19 +2,20 @@ package kata.supermarket;
 
 import java.math.BigDecimal;
 
-public class WeighedProduct {
+public class WeighedProduct extends ProductType {
 
-    private final BigDecimal pricePerKilo;
+	private final BigDecimal pricePerKilo;
 
-    public WeighedProduct(final BigDecimal pricePerKilo) {
-        this.pricePerKilo = pricePerKilo;
-    }
+	public WeighedProduct(final BigDecimal pricePerKilo, final ItemType type) {
+		super(type);
+		this.pricePerKilo = pricePerKilo;
+	}
 
-    BigDecimal pricePerKilo() {
-        return pricePerKilo;
-    }
+	BigDecimal pricePerKilo() {
+		return pricePerKilo;
+	}
 
-    public Item weighing(final BigDecimal kilos) {
-        return new ItemByWeight(this, kilos);
-    }
+	public Item weighing(final BigDecimal kilos) {
+		return new ItemByWeight(this, kilos);
+	}
 }

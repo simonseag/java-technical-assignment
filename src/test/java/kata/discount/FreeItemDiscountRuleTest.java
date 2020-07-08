@@ -12,26 +12,32 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 import kata.supermarket.Item;
+import kata.supermarket.ItemType;
 import kata.supermarket.Product;
 
+/**
+ * 
+ * @author simon.seagroatt
+ *
+ */
 class FreeItemDiscountRuleTest {
 
 	@Test
 	void testCalculateFreeItemsFromNullList() {
-		FreeItemDiscountRule theRule = new FreeItemDiscountRule(3, 1);
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.A, 3, 1);
 		assertEquals("There should be zero free items", 0, theRule.calculateFreeItems(null));
 	}
 
 	@Test
 	void testCalculateFreeItemsFromEmptyList() {
-		FreeItemDiscountRule theRule = new FreeItemDiscountRule(3, 1);
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.A, 3, 1);
 		assertEquals("There should be zero free items", 0, theRule.calculateFreeItems(Collections.emptyList()));
 	}
 
 	@Test
 	void testInvalidNegativeRuleDefinition() {
 		try {
-			new FreeItemDiscountRule(-1, -1);
+			new FreeItemDiscountRule(null, -1, -1);
 			fail("We should not have been able to create a rule with invalid parameters");
 		} catch (IllegalStateException ex) {
 			// this should have thrown an exception!
@@ -41,7 +47,7 @@ class FreeItemDiscountRuleTest {
 	@Test
 	void testInvalidPositiveRuleDefinition() {
 		try {
-			new FreeItemDiscountRule(0, 0);
+			new FreeItemDiscountRule(ItemType.A, 0, 0);
 			fail("We should not have been able to create a rule with invalid parameters");
 		} catch (IllegalStateException ex) {
 			// this should have thrown an exception!
@@ -66,7 +72,7 @@ class FreeItemDiscountRuleTest {
 	}
 
 	private void testFreeItemCountOnForteenItems(int qualifyCount, int freeItemCount, int result) {
-		FreeItemDiscountRule theRule = new FreeItemDiscountRule(qualifyCount, freeItemCount);
+		FreeItemDiscountRule theRule = new FreeItemDiscountRule(ItemType.E, qualifyCount, freeItemCount);
 
 		long items = theRule.calculateFreeItems(ForteenTinsOfBeans());
 		assertEquals("Incorrect Number of free items returned", result, items);
@@ -81,7 +87,7 @@ class FreeItemDiscountRuleTest {
 	}
 
 	private static Item aTinOfBeans() {
-		return new Product(new BigDecimal("0.55")).oneOf();
+		return new Product(new BigDecimal("0.55"), ItemType.E).oneOf();
 	}
 
 }

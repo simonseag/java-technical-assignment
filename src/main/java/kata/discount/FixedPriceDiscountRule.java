@@ -3,6 +3,7 @@ package kata.discount;
 import java.util.List;
 
 import kata.supermarket.Item;
+import kata.supermarket.ItemType;
 
 /**
  * This rule should be used when you want to apply a fixed price for a number of
@@ -19,8 +20,12 @@ import kata.supermarket.Item;
  * @author simon.seagroatt
  *
  */
-public class FixedPriceDiscountRule implements DiscountRule {
+public class FixedPriceDiscountRule extends QualifyingDiscountRule {
 
+	public FixedPriceDiscountRule(ItemType qualifyType) {
+		super(qualifyType);
+	}
+	
 	@Override
 	public long calculateFreeItems(List<Item> items) {
 		return 0;

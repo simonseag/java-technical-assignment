@@ -3,6 +3,7 @@ package kata.discount;
 import java.util.List;
 
 import kata.supermarket.Item;
+import kata.supermarket.ItemType;
 
 /**
  * This rule should be applied when a specific amount of weight should be sold
@@ -20,8 +21,12 @@ import kata.supermarket.Item;
  * @author simon.seagroatt
  *
  */
-public class WeightFixedPercentageDiscountRule implements DiscountRule {
+public class WeightFixedPercentageDiscountRule extends QualifyingDiscountRule {
 
+	public WeightFixedPercentageDiscountRule(ItemType qualifyType) {
+		super(qualifyType);
+	}
+	
 	@Override
 	public long calculateFreeItems(List<Item> items) {
 		return 0;

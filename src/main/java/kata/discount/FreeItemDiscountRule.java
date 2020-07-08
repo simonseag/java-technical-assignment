@@ -3,6 +3,7 @@ package kata.discount;
 import java.util.List;
 
 import kata.supermarket.Item;
+import kata.supermarket.ItemType;
 
 /**
  * This discount should be used when you want to gift a free item(s) based on
@@ -16,12 +17,13 @@ import kata.supermarket.Item;
  * @author simon.seagroatt
  *
  */
-public class FreeItemDiscountRule implements DiscountRule {
+public class FreeItemDiscountRule extends QualifyingDiscountRule {
 
 	private int noOfItemsToQualify;
 	private int noOfFreeItems;
 
-	public FreeItemDiscountRule(int qualifyCount, int freeItemCount) {
+	public FreeItemDiscountRule(ItemType type, int qualifyCount, int freeItemCount) {
+		super(type);
 		noOfItemsToQualify = qualifyCount;
 		noOfFreeItems = freeItemCount;
 
