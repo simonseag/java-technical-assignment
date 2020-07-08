@@ -1,3 +1,5 @@
 # Notes
 
-Please add here any notes, assumptions and design decisions that might help up understand your though process.
+1) The idea is that we build classes to model each rule type
+2) The runs will be managed centrally
+3) The basket can reference this centrally managed rule calculator
