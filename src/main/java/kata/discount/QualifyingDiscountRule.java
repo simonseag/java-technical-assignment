@@ -14,7 +14,7 @@ import kata.supermarket.ItemType;
  * @author simon.seagroatt
  *
  */
-public abstract class QualifyingDiscountRule implements DiscountRule {
+public abstract class QualifyingDiscountRule extends LoadableDiscountRule {
 
 	private ItemType qualifyType;
 
@@ -34,6 +34,12 @@ public abstract class QualifyingDiscountRule implements DiscountRule {
 	}
 
 	protected ItemType getItemType() {
+		return qualifyType;
+	}
+
+	@Override
+	public ItemType getKey() {
+		// current implementation is that only 1 rule can be added for a given ItemType
 		return qualifyType;
 	}
 
