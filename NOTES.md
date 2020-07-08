@@ -23,7 +23,8 @@ For example, if we have can's of coke, loafs of bread and tins of beans, we ther
 
 10) Given the time constraints I have implemented only the FreeItemDiscountRule however I have stubbed additional rules which I believe would cover the additional scenarios highlighted in the specifications. We would have to implement the calculation logic in each and the load/add them to the DiscountCalculator in the same way as the FreeItemDiscountRule.
 
-11) This solution is extendible by implementing additional rules, each responsible for one specific discount for one specific product.
+11) My solution can be further extended by implementing as many additional rules as required. Each responsible for one specific discount for one specific product.
 
-12) If we wanted to be able to apply multiple rules to a single product, this would be very possible given then current structure. The only element we would need to modify is the unique key. This is current just the ItemType enum, but we would think about combining both this and a unique element from the rule itself.
+12) If we wanted to be able to apply multiple rules to a single product, this would be easily possible given the current structure. The only element we would need to modify is the unique key which each rule has (LoadableDiscountRule.getKey method). The current implementation is just the ItemType enum, but we would think about combining both this and a unique element from the rule itself if multiple rule were used per ItemType.
 
+13) As a note on the time limit. I was not able to work on this task during a single block of time due to other commitments, so you will see commits over a number of hours. I believe I cumulatively spent approximately the correct amount of time.
