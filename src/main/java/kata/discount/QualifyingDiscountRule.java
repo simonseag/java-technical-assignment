@@ -1,5 +1,6 @@
 package kata.discount;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +24,17 @@ public abstract class QualifyingDiscountRule implements DiscountRule {
 
 	List<Item> getQualifyingItems(List<Item> items) {
 
+		if (items == null) {
+			return Collections.emptyList();
+		}
+
 		return items.stream()
 				.filter(p -> p.getType() == qualifyType)
 				.collect(Collectors.toList());
 	}
+
+	protected ItemType getItemType() {
+		return qualifyType;
+	}
+
 }

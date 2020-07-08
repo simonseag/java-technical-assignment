@@ -22,7 +22,18 @@ public class FreeItemDiscountRule extends QualifyingDiscountRule {
 	private int noOfItemsToQualify;
 	private int noOfFreeItems;
 
-	public FreeItemDiscountRule(ItemType type, int qualifyCount, int freeItemCount) {
+	/**
+	 * Constructor
+	 * 
+	 * @param type          the product identifier which will be associated with
+	 *                      this rule
+	 * @param qualifyCount  the number of items to purchase which gives you a
+	 *                      discount
+	 * @param freeItemCount the number of free items you receive
+	 * @throws IllegalStateException if the supplied parameters do not meet the
+	 *                               validation criteria
+	 */
+	public FreeItemDiscountRule(ItemType type, int qualifyCount, int freeItemCount) throws IllegalStateException {
 		super(type);
 		noOfItemsToQualify = qualifyCount;
 		noOfFreeItems = freeItemCount;
@@ -37,16 +48,20 @@ public class FreeItemDiscountRule extends QualifyingDiscountRule {
 			return 0;
 		}
 
+		List<Item> qualifyingItems = getQualifyingItems(items);
+
+		long itemsInBasketCount = qualifyingItems.size();
+
 		// total of all the purchased and free items
 		int totalItemsInBundle = noOfItemsToQualify + noOfFreeItems;
 
-		if (items.size() >= totalItemsInBundle) {
+		if (itemsInBasketCount >= totalItemsInBundle) {
 
 			// How many times does this go into the items we have
-			long discountMultiplier = Math.floorDiv(items.size(), totalItemsInBundle);
+			long discountMultiplier = Math.floorDiv(itemsInBasketCount, totalItemsInBundle);
 
 			// how many items does that leave
-			long remainder = items.size() % totalItemsInBundle;
+			long remainder = itemsInBasketCount % totalItemsInBundle;
 
 			// are there any additional free items from those remaining
 			long additionalFreeItems = 0;
@@ -62,7 +77,7 @@ public class FreeItemDiscountRule extends QualifyingDiscountRule {
 
 	private void isValid() {
 
-		if (noOfItemsToQualify <= 0 || noOfFreeItems <= 0) {
+		if (noOfItemsToQualify <= 0 || noOfFreeItems <= 0 || getItemType() == null) {
 			throw new IllegalStateException("A discount cannot be calculated given the defined rules");
 		}
 	}
