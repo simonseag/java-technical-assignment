@@ -35,11 +35,11 @@ class BasketWithDiscountTest {
 		FreeItemDiscountRule ruleBuyThreeGetOneFree = new FreeItemDiscountRule(ItemType.E, 3, 1);
 		ruleBuyThreeGetOneFree.load();
 
-		FreeItemDiscountRule ruleBuyTwoGetOneFree = new FreeItemDiscountRule(ItemType.B, 1, 1);
-		ruleBuyTwoGetOneFree.load();
-
-		FreeItemDiscountRule ruleBuyOneGetOneFree = new FreeItemDiscountRule(ItemType.A, 2, 1);
+		FreeItemDiscountRule ruleBuyOneGetOneFree = new FreeItemDiscountRule(ItemType.B, 1, 1);
 		ruleBuyOneGetOneFree.load();
+
+		FreeItemDiscountRule ruleBuyThreeItemsForThePriceOfTwo = new FreeItemDiscountRule(ItemType.A, 2, 1);
+		ruleBuyThreeItemsForThePriceOfTwo.load();
 	}
 
 	@AfterAll
